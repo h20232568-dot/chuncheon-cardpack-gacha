@@ -2,70 +2,89 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>춘천 닭갈비·막국수 카드팩</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#151238">
+<title>막닭.ZIP · 춘천 닭갈비 막국수 축제 미니게임</title>
+<link rel="stylesheet" href="hub.css">
 </head>
 <body>
-<div id="app">
-  <header class="topbar">
-    <div class="logo">춘천 <b>닭갈비·막국수</b> 카드팩</div>
-    <div class="wallet" title="축제 코인"><span class="coin-ico">₩</span><span id="coins">0</span></div>
-    <button id="soundBtn" class="icon-btn" title="소리 켜기/끄기">🔊</button>
+<div class="sky" aria-hidden="true"></div>
+<main class="hub">
+  <header class="hero">
+    <p class="eyebrow">춘천 닭갈비·막국수 축제</p>
+    <h1 class="logo">
+      <span class="mak">막</span><span class="dak">닭</span><span class="zip">.ZIP</span>
+    </h1>
+    <div class="zipper" aria-hidden="true"><i></i></div>
+    <p class="tagline">미니게임 압축 파일, 하나씩 풀어서 즐겨 보세요!</p>
+    <div class="summary">
+      <div><span>모은 별</span><b id="sumStars">0 / 9</b></div>
+      <div><span>카드 도감</span><b id="sumCards">0 / 8</b></div>
+      <div><span>축제 코인</span><b id="sumCoins">-</b></div>
+    </div>
   </header>
 
-  <main>
-    <section id="shop" class="screen active">
-      <p class="shop-guide">개봉할 팩을 골라 주세요</p>
-      <div class="pack-select" id="packSelect"></div>
-      <div class="pack-info" id="packInfo"></div>
-      <div class="shop-actions">
-        <button id="openBtn" class="btn primary">팩 개봉하기 <small id="costLabel"></small></button>
-        <button id="allowanceBtn" class="btn ghost hidden">사장님께 용돈 받기 (+500)</button>
+  <ol class="files">
+    <li class="file" data-game="jumprope">
+      <a class="thumb" href="minigames/jumprope/" style="--img:url(cards/02.png)" aria-label="막 넘고 닭 넘어 열기"></a>
+      <div class="info">
+        <p class="fname">01_막넘고닭넘어.game</p>
+        <h2>막 넘고 닭 넘어</h2>
+        <p class="desc">막국수 면발 줄넘기. 박자 맞춰 탭!</p>
+        <p class="rec" data-rec></p>
       </div>
-      <div class="pity">
-        <div class="pity-label"><span>✦ 특별 카드 천장</span><span id="pityText"></span></div>
-        <div class="pity-bar"><i id="pityFill"></i></div>
+      <a class="btn" href="minigames/jumprope/">플레이</a>
+    </li>
+
+    <li class="file" data-game="whack">
+      <a class="thumb" href="minigames/whack/" style="--img:url(cards/01.png)" aria-label="닭치고 닭잡고 열기"></a>
+      <div class="info">
+        <p class="fname">02_닭치고닭잡고.game</p>
+        <h2>닭치고 닭잡고</h2>
+        <p class="desc">둥지에서 튀어나온 닭을 뒤집개로 탁!</p>
+        <p class="rec" data-rec></p>
       </div>
-      <div class="stats" id="stats"></div>
-    </section>
+      <a class="btn" href="minigames/whack/">플레이</a>
+    </li>
 
-    <section id="collection" class="screen">
-      <div class="col-head">
-        <h2>카드 도감</h2>
-        <span id="colProgress"></span>
+    <li class="file" data-game="run">
+      <a class="thumb" href="minigames/run/" style="--img:url(cards/04.png)" aria-label="100m 달리기 열기"></a>
+      <div class="info">
+        <p class="fname">03_100m달리기.game</p>
+        <h2>100m 달리기</h2>
+        <p class="desc">미끌미끌 닭발 신발로 결승선까지!</p>
+        <p class="rec" data-rec></p>
       </div>
-      <div class="col-bar"><i id="colFill"></i></div>
-      <div class="col-grid" id="colGrid"></div>
-      <button id="resetBtn" class="link-btn">기록 초기화</button>
-    </section>
-  </main>
+      <a class="btn" href="minigames/run/">플레이</a>
+    </li>
 
-  <nav class="tabbar">
-    <button data-tab="shop" class="active"><span>🎴</span>팩 열기</button>
-    <button data-tab="collection"><span>📖</span>도감</button>
-    <button id="ratesBtn"><span>📊</span>확률 정보</button>
-  </nav>
-</div>
+    <li class="file soon" data-game="catch">
+      <a class="thumb" href="minigames/catch/" style="--img:url(cards/08.png)" aria-label="하늘에서 막국수가 내린다면 열기"></a>
+      <div class="info">
+        <p class="fname">04_막국수가내린다면.game</p>
+        <h2>하늘에서 막국수가 내린다면</h2>
+        <p class="desc">떨어지는 막국수를 그릇으로 받아라!</p>
+        <p class="rec"><span class="tag">준비 중</span></p>
+      </div>
+      <a class="btn ghost" href="minigames/catch/">미리보기</a>
+    </li>
 
-<!-- 개봉 무대 -->
-<div id="stage" class="stage hidden">
-  <div class="stage-bg"></div>
-  <div class="rays"></div>
-  <div class="stage-pack" id="stagePack"></div>
-  <div class="card-stack" id="cardStack"></div>
-  <div class="counter" id="counter"></div>
-  <div class="hint" id="stageHint"></div>
-  <div class="banner" id="banner"></div>
-  <div class="summary hidden" id="summary"></div>
-  <button id="skipBtn" class="skip">모두 공개 ≫</button>
-</div>
+    <li class="file pack" data-game="gacha">
+      <a class="thumb fan" href="gacha.html" aria-label="카드팩 열기">
+        <i style="--img:url(cards/03.png)"></i><i style="--img:url(cards/07.png)"></i><i style="--img:url(cards/05.png)"></i>
+      </a>
+      <div class="info">
+        <p class="fname">05_카드팩.zip</p>
+        <h2>축제 카드팩 뽑기</h2>
+        <p class="desc">닭갈비·막국수 캐릭터 카드 8종 모으기</p>
+        <p class="rec" data-rec></p>
+      </div>
+      <a class="btn gold" href="gacha.html">개봉</a>
+    </li>
+  </ol>
 
-<canvas id="fx"></canvas>
-<div id="flash"></div>
-<div id="modal" class="modal hidden"></div>
-<div id="toast"></div>
-
-<script src="game.js"></script>
+  <footer class="foot">춘천 닭갈비 막국수 축제 · 막닭.ZIP</footer>
+</main>
+<script src="hub.js"></script>
 </body>
 </html>

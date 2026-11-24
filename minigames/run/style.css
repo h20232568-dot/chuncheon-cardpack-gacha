@@ -1,0 +1,8 @@
+/* 100m 달리기 전용 스타일 (공통은 ../shared/ui.css) */
+.cast.four { gap: calc(var(--u) * 6); }
+.cast.four figure { flex: 1; }
+.cast.four figcaption { font-size: calc(var(--u) * 9.5); }
+.cast.four figcaption b { font-size: calc(var(--u) * 11); }
+.gold-t { color: #b8860b !important; }
+.no-t { color: var(--red2) !important; }
+.howto { font-size: calc(var(--u) * 11.5); }

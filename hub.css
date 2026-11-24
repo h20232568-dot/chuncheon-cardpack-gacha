@@ -1,0 +1,133 @@
+/* 막닭.ZIP — 미니게임 모음 첫 화면 */
+:root {
+  --ink: #2a1a14;
+  --cream: #fbe9d4;
+  --cream2: #f6dcc0;
+  --red: #e2502a;
+  --red2: #b8331a;
+  --gold: #ffcf4a;
+  --font: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: var(--font); color: var(--ink);
+  background: linear-gradient(180deg, #151238 0%, #3b1f55 45%, #8a3a50 80%, #2e1c16 100%) fixed;
+}
+a { color: inherit; text-decoration: none; }
+
+/* 밤하늘 별 + 줄 조명 */
+.sky {
+  position: fixed; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.7) 0 1px, transparent 1.5px) 0 0 / 53px 47px,
+    radial-gradient(circle, rgba(255,255,255,.45) 0 1px, transparent 1.5px) 20px 30px / 71px 61px;
+  opacity: .6;
+}
+
+.hub { position: relative; max-width: 480px; margin: 0 auto; padding: 28px 16px 40px; }
+
+/* ---------- 머리 ---------- */
+.hero { text-align: center; color: #fff; }
+.eyebrow { margin: 0; font-size: 13px; font-weight: 700; color: #ffcf9a; letter-spacing: .5px; }
+.logo {
+  margin: 6px 0 0; font-size: 64px; font-weight: 900; letter-spacing: -3px; line-height: 1;
+  text-shadow: 0 4px 0 #2a1030, 0 0 24px rgba(255,140,60,.35);
+}
+.logo .mak { color: #f4d3a8; }
+.logo .dak { color: #ff7a3a; }
+.logo .zip {
+  display: inline-block; margin-left: 6px; vertical-align: 10px;
+  font-size: 24px; letter-spacing: 0; padding: 4px 10px; border-radius: 8px;
+  background: var(--gold); color: #3a2208; text-shadow: none;
+  box-shadow: 0 3px 0 #a87410; transform: rotate(-6deg);
+}
+/* 지퍼 장식 */
+.zipper { position: relative; height: 14px; margin: 14px auto 0; width: 220px; }
+.zipper::before {
+  content: ""; position: absolute; inset: 3px 0;
+  background: repeating-linear-gradient(90deg, #ffcf4a 0 6px, transparent 6px 10px);
+  border-radius: 2px; opacity: .85;
+}
+.zipper i {
+  position: absolute; left: 62%; top: -4px; width: 16px; height: 22px; border-radius: 4px 4px 8px 8px;
+  background: linear-gradient(#ffe08a, #c8900f); box-shadow: 0 2px 0 #7a5208;
+  animation: unzip 3.5s ease-in-out infinite alternate;
+}
+@keyframes unzip { from { left: 4%; } to { left: 88%; } }
+.tagline { margin: 12px 0 0; font-size: 14px; color: #f2dcea; }
+
+.summary {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px;
+}
+.summary div {
+  background: rgba(0,0,0,.28); border: 1px solid rgba(255,207,74,.3);
+  border-radius: 14px; padding: 9px 4px;
+}
+.summary span { display: block; font-size: 11px; color: #d8c4e0; }
+.summary b { font-size: 18px; color: var(--gold); font-variant-numeric: tabular-nums; }
+
+/* ---------- 게임 파일 목록 ---------- */
+.files { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.file {
+  display: grid; grid-template-columns: 104px 1fr auto; align-items: center; gap: 12px;
+  background: var(--cream); border: 5px solid #2b2523; border-radius: 20px; padding: 10px 12px 10px 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.35);
+  animation: rise .45s backwards;
+}
+.file:nth-child(2) { animation-delay: .06s; } .file:nth-child(3) { animation-delay: .12s; }
+.file:nth-child(4) { animation-delay: .18s; } .file:nth-child(5) { animation-delay: .24s; }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+
+.thumb {
+  display: block; aspect-ratio: 540 / 392; border-radius: 12px; border: 3px solid #2b2523;
+  background-image: var(--img); background-size: 116.67% auto; background-position: 50% 24.6%;
+}
+.file.soon .thumb { filter: grayscale(.55) brightness(.9); }
+.info { min-width: 0; }
+.fname { margin: 0; font-size: 10.5px; font-family: ui-monospace, Consolas, monospace; color: #9a7a66; }
+.info h2 { margin: 2px 0 0; font-size: 17px; font-weight: 900; letter-spacing: -.5px; line-height: 1.2; }
+.desc { margin: 3px 0 0; font-size: 12px; color: #6e5446; line-height: 1.35; }
+.rec { margin: 5px 0 0; font-size: 12px; font-weight: 700; color: #4a3226; min-height: 1em; }
+.rec .stars { color: #e0a010; letter-spacing: 1px; }
+.tag {
+  display: inline-block; background: #e2cdb6; color: #6e5446; border-radius: 999px;
+  padding: 2px 9px; font-size: 11px; font-weight: 800;
+}
+
+.btn {
+  align-self: center; white-space: nowrap;
+  background: linear-gradient(180deg, #f06a3a, var(--red2)); color: #fff;
+  font-weight: 900; font-size: 15px; padding: 11px 14px; border-radius: 12px;
+  box-shadow: 0 3px 0 #7a1e0e; transition: transform .08s;
+}
+.btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #7a1e0e; }
+.btn.ghost { background: transparent; color: #6e5446; border: 2px solid #d9bba0; box-shadow: none; padding: 9px 11px; font-size: 13px; }
+.btn.gold { background: linear-gradient(180deg, #ffd85a, #c8900f); color: #3a2208; box-shadow: 0 3px 0 #7a5208; }
+
+/* 카드팩: 카드 세 장을 부채꼴로 */
+.file.pack { background: linear-gradient(135deg, #fff3c8, #fbe0a0); border-color: #6a4808; }
+.thumb.fan { position: relative; border: 0; background: none; aspect-ratio: 540 / 392; }
+.thumb.fan i {
+  position: absolute; top: -6%; left: 34%; width: 34%; aspect-ratio: 630 / 880;
+  background: var(--img) center / cover; border-radius: 4px; border: 2px solid #2b2523;
+  box-shadow: 0 3px 6px rgba(0,0,0,.3); transform-origin: 50% 100%;
+}
+.thumb.fan i:nth-child(1) { transform: rotate(-18deg) translateX(-30%); }
+.thumb.fan i:nth-child(3) { transform: rotate(18deg) translateX(30%); }
+.thumb.fan i:nth-child(2) { z-index: 1; }
+
+.foot { margin-top: 26px; text-align: center; font-size: 12px; color: rgba(255,255,255,.45); }
+
+@media (max-width: 420px) {
+  .file { grid-template-columns: 78px 1fr auto; gap: 10px; padding: 9px 10px 9px 9px; border-width: 4px; }
+  .info h2 { font-size: 15.5px; }
+  .desc { font-size: 11.5px; }
+  .btn { font-size: 14px; padding: 10px 11px; }
+  .btn.ghost { font-size: 12px; padding: 8px 8px; }
+  .logo { font-size: 56px; }
+}
+@media (max-width: 330px) {
+  .file { grid-template-columns: 70px 1fr; }
+  .file .btn { grid-column: 1 / -1; text-align: center; }
+}

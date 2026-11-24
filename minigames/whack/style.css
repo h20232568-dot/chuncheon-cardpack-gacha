@@ -1,0 +1,27 @@
+/* 닭치고 닭잡고 전용 스타일 (공통은 ../shared/ui.css) */
+#wrap { cursor: none; }
+#wrap .overlay.show, #wrap button { cursor: pointer; }
+
+.cast.four { gap: calc(var(--u) * 6); }
+.cast.four figure { flex: 1; }
+.cast.four figcaption { font-size: calc(var(--u) * 9.5); }
+.cast.four figcaption b { font-size: calc(var(--u) * 11.5); }
+/* 타이틀 닭 소개 그림 (game.js가 캔버스에 직접 그림) */
+.pwrap { position: relative; }
+.portrait {
+  display: block; width: 100%; aspect-ratio: 540 / 392;
+  border: calc(var(--u) * 3) solid #2b2523; border-radius: calc(var(--u) * 10);
+  background: linear-gradient(#3b1f55, #c0584a);
+}
+.portrait.goldc { border-color: #c8900f; }
+.gold-t { color: #b8860b !important; }
+.cast figure.no .portrait { border-color: var(--red); }
+.cast figure.no .pwrap::after {
+  content: "✕"; position: absolute; right: calc(var(--u) * -6); top: calc(var(--u) * -8);
+  width: calc(var(--u) * 20); height: calc(var(--u) * 20); border-radius: 50%;
+  background: var(--red); color: #fff; font-weight: 900; font-size: calc(var(--u) * 12);
+  display: flex; align-items: center; justify-content: center;
+}
+.no-t { color: var(--red2) !important; }
+.btn small { font-size: .6em; opacity: .85; margin-left: .3em; }
+.howto { font-size: calc(var(--u) * 12); }
