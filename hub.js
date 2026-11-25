@@ -13,7 +13,7 @@
   const jrStars = jr ? [10, 30, 60].filter((s) => jr.best >= s).length : 0;
   const wmStars = wm ? [500, 1000, 1500].filter((s) => wm.best >= s).length : 0;
   const rn = read('chuncheon.minigame.run');
-  const rnStars = rn && rn.best != null ? [35, 28, 22].filter((s) => rn.best <= s).length : 0;
+  const rnStars = rn && rn.best != null ? [36, 27, 21].filter((s) => rn.best <= s).length : 0;
   const ct = read('chuncheon.minigame.catch');
   const ctStars = ct ? [400, 800, 1200].filter((s) => ct.best >= s).length : 0;
 

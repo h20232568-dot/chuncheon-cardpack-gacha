@@ -6,7 +6,7 @@
    - 닭발 ②: "꼬꼬!" 경고 뒤 2초간 좌우 조작이 뒤바뀜
    - 양배추 수호자: 키가 커서 피해야 함 / 뜨거운 철판: 점프로 넘기
    - 막국수 사리: 먹으면 잠깐 가속
-   - 35초 안에 100m 결승선 통과
+   - 36초 안에 100m 결승선 통과
    ========================================================= */
 (() => {
 'use strict';
@@ -15,14 +15,14 @@
 const W = 400, H = 720;
 const PI = Math.PI, TAU = PI * 2;
 const CFG = {
-  goal: 100, limit: 35,
-  vRun: 5.2, vBoost: 7.6, accel: 2.4,  // m/s
+  goal: 100, limit: 36,
+  vRun: 5.2, vBoost: 7.6, accel: 3.2,  // m/s
   boostTime: 2.5,
   jumpAir: 0.62, jumpG: 26,
-  slipLock: 0.3,                       // 레인 바꾼 뒤 휘청 (조작 불가)
-  fallTime: 1.6, invuln: 0.7,
-  warnTime: 0.9, reverseTime: 2.2,     // 꼬꼬! 경고 → 좌우 반전
-  stars: [35, 28, 22],                 // ★ 완주 / ★★ 28초 이내 / ★★★ 22초 이내
+  slipLock: 0.2,                       // 레인 바꾼 뒤 휘청 (조작 불가)
+  fallTime: 1.35, invuln: 1.0,
+  warnTime: 1.2, reverseTime: 1.6,     // 꼬꼬! 경고 → 좌우 반전
+  stars: [36, 27, 21],                 // ★ 완주 / ★★ 27초 이내 / ★★★ 21초 이내
 };
 const SAVE_KEY = 'chuncheon.minigame.run';
 const HZ = 262, F = 400, CAMH = 3, PZ = 3; // 원근: 지평선, 초점, 카메라 높이, 카메라~선수 거리(m)
@@ -117,11 +117,11 @@ function buildCourse() {
   while (d < 95) {
     const k = d / 100;
     const lanes = [-1, 0, 1].sort(() => Math.random() - 0.5);
-    if (Math.random() < 0.45) lanes.unshift(...lanes.splice(lanes.indexOf(0), 1)); // 가운데 레인에 더 자주 (가만히 있으면 못 버팀)
-    const nBlock = d > 25 && Math.random() < 0.55 ? 2 : 1;
+    if (Math.random() < 0.4) lanes.unshift(...lanes.splice(lanes.indexOf(0), 1)); // 가운데 레인에 더 자주 (가만히 있으면 못 버팀)
+    const nBlock = d > 35 && Math.random() < 0.4 ? 2 : 1;
     for (let i = 0; i < nBlock; i++) obs.push({ d, lane: lanes[i], type: Math.random() < 0.5 ? 'plate' : 'cabbage', done: false, hit: false });
     if (Math.random() < 0.28) items.push({ d: d + 0.01, lane: lanes[2], got: false });
-    d += lerp(7, 4.4, k) * (0.85 + Math.random() * 0.3);
+    d += lerp(8, 5.4, k) * (0.85 + Math.random() * 0.3);
   }
   return { obs, items };
 }
@@ -137,7 +137,7 @@ function freshState(mode) {
     y: 0, vy: 0, air: false,
     fallT: -9, invulnT: -9, falls: 0,
     boostT: -9, saris: 0,
-    warnAt: 6 + Math.random() * 3, revUntil: -9,
+    warnAt: 9 + Math.random() * 3, revUntil: -9,
     obs: course.obs, items: course.items,
     runPh: 0, lastStep: 0,
     cd: null, endT: 0, flash: 0, flashC: '255,60,30', shake: 0, lastTick: 99,
@@ -327,7 +327,7 @@ function update(dt) {
       if (S.time >= S.warnAt && S.time < S.warnAt + dt + 0.0001) { Snd.kkokko(); pop('꼬꼬! 닭발이 꼬인다!', '#ffcf4a', 22, 200, 230, 1.0); }
       if (S.time >= S.warnAt + CFG.warnTime && S.revUntil < S.warnAt) {
         S.revUntil = S.time + CFG.reverseTime;
-        S.warnAt = S.revUntil + 6 + Math.random() * 4;
+        S.warnAt = S.revUntil + 9 + Math.random() * 4;
       }
     }
 
