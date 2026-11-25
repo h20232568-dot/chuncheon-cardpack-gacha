@@ -332,6 +332,14 @@ function fail() {
   ui.pauseBtn.classList.add('hidden');
 }
 
+function showReward(base, stars) {
+  const el = document.getElementById('resReward');
+  const W = window.MakdakWallet;
+  if (!el || !W) return;
+  const earned = W.reward(base, stars);
+  const total = W.add(earned);
+  el.innerHTML = `<span class="coin">₩</span> <b>+${earned}</b> 축제 코인 획득 <small>(보유 ${W.isInfinite() ? '∞' : total.toLocaleString()})</small><a href="../../gacha.html">카드팩 열기 ▶</a>`;
+}
 function showResult() {
   S.mode = 'result';
   const n = S.jumps, stars = starCount(n);
@@ -340,6 +348,8 @@ function showResult() {
   save.bestScore = Math.max(save.bestScore, S.score);
   save.stars = Math.max(save.stars, stars);
   writeSave();
+  // 축제 코인 지급 (넘은 횟수 × 2 + 별 보너스) → 카드팩에서 사용
+  showReward(n * 2, stars);
 
   ui.resJumps.textContent = n;
   [...ui.resStars.children].forEach((el, i) => {

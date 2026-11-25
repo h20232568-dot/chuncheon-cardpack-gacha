@@ -18,9 +18,9 @@
     <div class="zipper" aria-hidden="true"><i></i></div>
     <p class="tagline">미니게임 압축 파일, 하나씩 풀어서 즐겨 보세요!</p>
     <div class="summary">
-      <div><span>모은 별</span><b id="sumStars">0 / 9</b></div>
+      <div><span>모은 별</span><b id="sumStars">0 / 12</b></div>
       <div><span>카드 도감</span><b id="sumCards">0 / 8</b></div>
-      <div><span>축제 코인</span><b id="sumCoins">-</b></div>
+      <div id="coinBox"><span>축제 코인</span><b id="sumCoins">-</b></div>
     </div>
   </header>
 
@@ -58,15 +58,15 @@
       <a class="btn" href="minigames/run/">플레이</a>
     </li>
 
-    <li class="file soon" data-game="catch">
+    <li class="file" data-game="catch">
       <a class="thumb" href="minigames/catch/" style="--img:url(cards/08.png)" aria-label="하늘에서 막국수가 내린다면 열기"></a>
       <div class="info">
         <p class="fname">04_막국수가내린다면.game</p>
         <h2>하늘에서 막국수가 내린다면</h2>
         <p class="desc">떨어지는 막국수를 그릇으로 받아라!</p>
-        <p class="rec"><span class="tag">준비 중</span></p>
+        <p class="rec" data-rec></p>
       </div>
-      <a class="btn ghost" href="minigames/catch/">미리보기</a>
+      <a class="btn" href="minigames/catch/">플레이</a>
     </li>
 
     <li class="file pack" data-game="gacha">
@@ -85,6 +85,8 @@
 
   <footer class="foot">춘천 닭갈비 막국수 축제 · 막닭.ZIP</footer>
 </main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="wallet.js"></script>
 <script src="hub.js"></script>
 </body>
 </html>

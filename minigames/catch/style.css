@@ -1,0 +1,18 @@
+/* 하늘에서 막국수가 내린다면 전용 스타일 (공통은 ../shared/ui.css) */
+#wrap { touch-action: none; }
+h1 { font-size: calc(var(--u) * 30); }
+.cast.four { gap: calc(var(--u) * 6); }
+.cast.four figure { flex: 1; }
+.cast.four figcaption { font-size: calc(var(--u) * 9.5); }
+.cast.four figcaption b { font-size: calc(var(--u) * 11); }
+.gold-t { color: #b8860b !important; }
+.no-t { color: var(--red2) !important; }
+.howto { font-size: calc(var(--u) * 11.5); }
+
+.pwrap { position: relative; }
+.portrait {
+  display: block; width: 100%; aspect-ratio: 540 / 392;
+  border: calc(var(--u) * 3) solid #2b2523; border-radius: calc(var(--u) * 10);
+  background: linear-gradient(#3b1f55, #c0584a);
+}
+.cast figure.no .art { border-color: var(--red); }

@@ -439,3 +439,9 @@ main { flex: 1; position: relative; overflow: hidden; }
 
 /* 막닭.ZIP 목록으로 돌아가기 */
 .home-link { display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 14px; }
+
+/* 미니게임으로 코인 벌러 가기 */
+#earnLink { display: block; text-align: center; text-decoration: none; }
+#earnLink.hidden { display: none; }
+/* 이스터에그: 무한 코인 */
+.wallet.inf { border-color: #ff9ad0; box-shadow: 0 0 12px rgba(255,154,208,.6); }

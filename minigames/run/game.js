@@ -245,6 +245,14 @@ function timeout() {
   Snd.timeout();
   ui.pauseBtn.classList.add('hidden');
 }
+function showReward(base, stars) {
+  const el = document.getElementById('resReward');
+  const W = window.MakdakWallet;
+  if (!el || !W) return;
+  const earned = W.reward(base, stars);
+  const total = W.add(earned);
+  el.innerHTML = `<span class="coin">₩</span> <b>+${earned}</b> 축제 코인 획득 <small>(보유 ${W.isInfinite() ? '∞' : total.toLocaleString()})</small><a href="../../gacha.html">카드팩 열기 ▶</a>`;
+}
 function showResult() {
   const done = S.mode === 'finish';
   S.mode = 'result';
@@ -254,6 +262,8 @@ function showResult() {
   if (isNew) save.best = t;
   save.stars = Math.max(save.stars, stars);
   writeSave();
+  // 축제 코인 지급 (완주 60 / 실패 시 거리 ÷ 2 + 별 보너스) → 카드팩에서 사용
+  showReward(done ? 60 : S.dist / 2, stars);
   ui.resEyebrow.textContent = done ? '완주 기록' : '아쉬워요, 시간 초과';
   ui.resMain.textContent = done ? fmt(t) : Math.floor(S.dist);
   ui.resUnit.textContent = done ? '초' : 'm';

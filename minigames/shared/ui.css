@@ -161,18 +161,22 @@ h2 { margin: 0; font-size: calc(var(--u) * 24); font-weight: 900; }
 .panel > .eyebrow:first-of-type { margin-top: calc(var(--u) * 16); }
 a.btn { text-align: center; text-decoration: none; }
 
-/* ---------- 준비 중 페이지 ---------- */
-.soon-bg {
-  background:
-    radial-gradient(circle, rgba(255,255,255,.6) 0 1px, transparent 1.5px) 0 0 / 53px 47px,
-    linear-gradient(180deg, #151238, #3b1f55 50%, #8a3a50);
+/* ---------- 결과: 축제 코인 획득 ---------- */
+.reward {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * -4) 0 calc(var(--u) * 12); padding: calc(var(--u) * 8) calc(var(--u) * 10);
+  background: linear-gradient(90deg, #fff3c8, #ffe08a); border: calc(var(--u) * 2) solid #c8900f;
+  border-radius: calc(var(--u) * 12); font-size: calc(var(--u) * 13); font-weight: 700; color: #5a3a08;
 }
-.soon-bg .overlay { background: transparent; }
-.soon-art { position: relative; width: 70%; margin: 0 auto calc(var(--u) * 14); }
-.soon-art .art { filter: grayscale(.35); }
-.soon-badge {
-  position: absolute; right: calc(var(--u) * -10); top: calc(var(--u) * -10); transform: rotate(8deg);
-  background: var(--gold); color: #3a2208; font-weight: 900; font-size: calc(var(--u) * 13);
-  padding: calc(var(--u) * 4) calc(var(--u) * 10); border-radius: calc(var(--u) * 8);
-  box-shadow: 0 calc(var(--u) * 3) 0 #a87410;
+.reward:empty { display: none; }
+.reward .coin {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: calc(var(--u) * 20); height: calc(var(--u) * 20); border-radius: 50%;
+  background: #ffcf4a; border: calc(var(--u) * 2) solid #a87410; font-size: calc(var(--u) * 11); font-weight: 900;
+}
+.reward b { font-size: calc(var(--u) * 17); color: #8a4a00; }
+.reward small { font-size: calc(var(--u) * 11); color: #8a6a30; }
+.reward a {
+  margin-left: calc(var(--u) * 6); padding: calc(var(--u) * 4) calc(var(--u) * 10); border-radius: 999px;
+  background: #c8900f; color: #fff; text-decoration: none; font-size: calc(var(--u) * 12); font-weight: 900;
 }

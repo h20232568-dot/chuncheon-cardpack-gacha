@@ -14,6 +14,8 @@
   const wmStars = wm ? [500, 1000, 1500].filter((s) => wm.best >= s).length : 0;
   const rn = read('chuncheon.minigame.run');
   const rnStars = rn && rn.best != null ? [35, 28, 22].filter((s) => rn.best <= s).length : 0;
+  const ct = read('chuncheon.minigame.catch');
+  const ctStars = ct ? [400, 800, 1200].filter((s) => ct.best >= s).length : 0;
 
   setRec('jumprope', jr && jr.best
     ? `최고 ${jr.best}회 <span class="stars">${starText(jrStars)}</span>`
@@ -26,6 +28,10 @@
     ? `최고 ${rn.best.toFixed(2)}초 <span class="stars">${starText(rnStars)}</span>`
     : '<span class="tag">첫 도전을 기다려요</span>');
 
+  setRec('catch', ct && ct.best
+    ? `최고 ${ct.best}점 <span class="stars">${starText(ctStars)}</span>`
+    : '<span class="tag">첫 도전을 기다려요</span>');
+
   // 카드팩 가챠
   const gc = read('chuncheon-cardpack-v1');
   const owned = gc && gc.owned ? Object.values(gc.owned).filter((o) => o && o.n > 0).length : 0;
@@ -33,7 +39,41 @@
     ? `도감 ${owned} / 8 · 코인 ${gc.coins.toLocaleString()}`
     : '<span class="tag">아직 개봉 전</span>');
 
-  document.getElementById('sumStars').textContent = `${jrStars + wmStars + rnStars} / 9`;
+  document.getElementById('sumStars').textContent = `${jrStars + wmStars + rnStars + ctStars} / 12`;
   document.getElementById('sumCards').textContent = `${owned} / 8`;
-  document.getElementById('sumCoins').textContent = gc ? gc.coins.toLocaleString() : '-';
+  // 축제 코인 (미니게임으로 벌고 카드팩에서 씀)
+  const W = window.MakdakWallet;
+  const coinEl = document.getElementById('sumCoins');
+  const showCoins = () => {
+    const inf = W && W.isInfinite();
+    coinEl.textContent = inf ? '∞' : (W ? W.coins() : 0).toLocaleString();
+    document.getElementById('coinBox').classList.toggle('inf', !!inf);
+    document.querySelector('.logo').classList.toggle('inf', !!inf);
+  };
+  showCoins();
+  addEventListener('pageshow', showCoins);
+
+  // 토스트
+  const toastEl = document.getElementById('toast');
+  let toastT = 0;
+  const toast = (msg) => { toastEl.textContent = msg; toastEl.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('show'), 2400); };
+
+  // 🥚 이스터에그: 막닭 로고를 빠르게 7번 누르면 무한 코인 켜기/끄기
+  const logo = document.querySelector('.logo');
+  const TAPS = 7, WINDOW = 2500;
+  let taps = [];
+  logo.addEventListener('click', () => {
+    const now = Date.now();
+    taps = taps.filter((t) => now - t < WINDOW); taps.push(now);
+    logo.classList.remove('tap'); void logo.offsetWidth; logo.classList.add('tap');
+    const left = TAPS - taps.length;
+    if (left > 0 && left <= 3) toast(left + '번 더…?');
+    if (taps.length >= TAPS && W) {
+      taps = [];
+      const on = !W.isInfinite();
+      W.setInfinite(on);
+      showCoins();
+      toast(on ? '🥚 이스터에그! 무한 코인 ON — 카드팩을 마음껏 열어 보세요' : '무한 코인 OFF — 원래 코인으로 돌아왔어요');
+    }
+  });
 })();

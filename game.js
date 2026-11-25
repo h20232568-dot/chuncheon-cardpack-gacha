@@ -27,8 +27,9 @@ const HOLO_DUP = 50;
 const PACK_COST = 100;
 const PITY_MAX = 40;        // 40팩 안에 특별 카드 확정
 const GOD_RATE = 0.005;     // 갓팩(전부 홀로 + 특별) 0.5%
-const START_COINS = 1500;
-const ALLOWANCE = 500;
+const START_COINS = (window.MakdakWallet && MakdakWallet.START) || 2000; // 처음엔 카드팩 20번 무료
+// 코인이 모자라면 막닭.ZIP 미니게임으로 벌어 온다 (wallet.js)
+const infinite = () => !!(window.MakdakWallet && MakdakWallet.isInfinite()); // 이스터에그: 무한 코인
 
 const PACKS = [
   { id: 'dak', name: '닭갈비 팩', sub: '불꽃 철판 에디션', art: 1, c1: '#e2462b', c2: '#ff9a3c', c3: '#7a1308',
@@ -244,7 +245,8 @@ function flash(gold = false) {
 }
 const vibrate = (p) => { if (navigator.vibrate) try { navigator.vibrate(p); } catch (e) { /* 무시 */ } };
 function updateCoins(bump) {
-  $('#coins').textContent = state.coins.toLocaleString();
+  $('#coins').textContent = infinite() ? '∞' : state.coins.toLocaleString();
+  $('.wallet').classList.toggle('inf', infinite());
   if (bump) { const w = $('.wallet'); w.classList.remove('bump'); void w.offsetWidth; w.classList.add('bump'); }
 }
 const rarityTag = (card, holo) => {
@@ -368,8 +370,8 @@ function renderShop() {
   const p = PACKS[state.packSel];
   $('#packInfo').innerHTML = `<h3>${p.name}</h3><p>${p.desc}</p>`;
   $('#costLabel').textContent = `₩ ${PACK_COST}`;
-  $('#openBtn').disabled = state.coins < PACK_COST;
-  $('#allowanceBtn').classList.toggle('hidden', state.coins >= PACK_COST);
+  $('#openBtn').disabled = !infinite() && state.coins < PACK_COST;
+  $('#earnLink').classList.toggle('hidden', infinite() || state.coins >= PACK_COST);
   $('#pityText').textContent = `${state.pity} / ${PITY_MAX}팩`;
   $('#pityFill').style.width = (state.pity / PITY_MAX * 100) + '%';
   const owned = CARDS.filter((c) => own(c.id).n > 0).length;
@@ -496,8 +498,8 @@ let nameEl = null;
 function openPack() {
   if (session) return;
   Sound.init();
-  if (state.coins < PACK_COST) { toast('코인이 부족해요. 사장님께 용돈을 받아 보세요!'); return; }
-  state.coins -= PACK_COST;
+  if (!infinite() && state.coins < PACK_COST) { toast('코인이 부족해요. 미니게임을 하고 코인을 벌어 오세요!'); return; }
+  if (!infinite()) state.coins -= PACK_COST;
   const pack = PACKS[state.packSel];
   const { slots, god } = rollPack(pack);
   save();
@@ -796,7 +798,7 @@ function showSummary(celebrate) {
   });
   sum.classList.remove('hidden');
   const again = $('#againBtn');
-  again.disabled = state.coins < PACK_COST;
+  again.disabled = !infinite() && state.coins < PACK_COST;
   again.onclick = (e) => { e.stopPropagation(); closeStage(); openPack(); };
   $('#closeStageBtn').onclick = (e) => { e.stopPropagation(); closeStage(); };
   if (celebrate) {
@@ -830,15 +832,16 @@ stage.addEventListener('click', (e) => {
 });
 $('#skipBtn').addEventListener('click', (e) => { e.stopPropagation(); skipAll(); });
 $('#openBtn').addEventListener('click', () => openPack());
-$('#allowanceBtn').addEventListener('click', () => {
-  Sound.init();
-  state.coins += ALLOWANCE; save();
-  Sound.coin(); updateCoins(true);
-  const r = $('.wallet').getBoundingClientRect();
-  FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: 30, colors: ['#ffcf4a', '#fff1b8'], speed: 260, g: 400, life: 0.9 });
-  toast(`사장님: "많이 드릴게요~" 코인 +${ALLOWANCE}`);
-  renderShop();
-});
+// 다른 페이지(미니게임)에서 번 코인 · 무한 코인 모드를 돌아왔을 때 바로 반영
+function syncWallet() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SAVE_KEY));
+    if (s && typeof s.coins === 'number' && s.coins !== state.coins) { state.coins = s.coins; updateCoins(true); }
+  } catch (e) { /* 무시 */ }
+  updateCoins(); renderShop();
+}
+addEventListener('pageshow', syncWallet);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && !session) syncWallet(); });
 $('#ratesBtn').addEventListener('click', openRates);
 $('#soundBtn').addEventListener('click', () => {
   state.sound = !state.sound; save();
@@ -874,5 +877,5 @@ document.addEventListener('keydown', (e) => {
 $('#soundBtn').textContent = state.sound ? '🔊' : '🔇';
 renderShop();
 renderCollection();
-if (firstVisit) { save(); setTimeout(() => toast(`축제에 오신 걸 환영해요! 코인 ${START_COINS} 지급`), 400); }
+if (firstVisit) { save(); setTimeout(() => toast(`축제에 오신 걸 환영해요! 카드팩 ${Math.floor(START_COINS / PACK_COST)}번 무료 (코인 ${START_COINS})`), 400); }
 })();
